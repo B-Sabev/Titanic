@@ -61,7 +61,7 @@ alpha = 0.05
 # parameter for regularization TODO experiment after non-linearity is added
 reg_term = 0.05
 
-iterations = 1000
+iterations = 10000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
@@ -81,7 +81,7 @@ for i in range(iterations): # while the error is more than 20%
     theta -= alpha * (np.dot((h_theta - y).T, x) + reg_term / x.shape[0] * theta)
 
 
-print "Best result with {0:.3f} error rate on training data for {1:3d} iterations".format(min(errors),i)
+print "Best result with {0:.3f} error rate on training data for {1:3d} iterations".format(min(errors),iterations)
 
 
 # plotting the errors agains the iterations
