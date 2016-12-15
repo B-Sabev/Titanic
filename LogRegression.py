@@ -46,14 +46,15 @@ for column1 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
 
 
 # TODO try cross-validation
-x = np.array(input_data)
+x = np.array(input_data, float)
 x = np.insert(x, [0], 1, axis = 1) # insert x_0 = 1
 # classes
-y = np.array(output_data)
+y = np.array(output_data, float)
 y = y.reshape(y.shape[0],) # make it (n,) array
 # init random parameters - theta
 np.random.seed(1)  # seed random numbers 0 or 1
-theta = np.random.random(x.shape[1]) - 0.3
+#theta = np.random.random(x.shape[1])
+theta = np.ones(x.shape[1], dtype=float) / 2.0
 #TODO Hard to generate good initial values - check why!!!
 
 
@@ -67,16 +68,20 @@ def sigm(z):
 def calcError(y, y_h):
     return (np.sum(np.abs(y-y_h)))/y.shape[0]
 
-def cost(h_t, y):
-    return -y*math.log(h_t, 10) - (1 - y) * math.log(1 - h_t)
-cost = np.vectorize(cost)
+def calc_cost(h_t, y): #TODO FIX THIS SHIT ALWAYS NAN OR -INF, WHY!??! WHY !?!??
+    term = np.log10(np.ones(y.shape) - h_t)
+    term = np.nan_to_num(term)
+    cost = -np.dot(y,np.log10(h_t)) - np.dot((np.ones(y.shape) - y),term)
+    return np.nan_to_num(cost)
+
+
 
 # learning rate - TODO TEST WITH MORE LEARNING RATES
-alpha = 0.05
+alpha = 0.005
 # parameter for regularization TODO experiment after non-linearity is added
-reg_term = 0.05
+reg_term = 2000
 
-iterations = 20000
+iterations = 10000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
@@ -87,18 +92,17 @@ for i in range(iterations):
     # make a concrete prediction: alive if more than 50% chance.
     y_h = np.zeros(h_theta.shape,dtype=float)
     y_h[h_theta >= 0.5] = 1
-
+    cost[i] = calc_cost(h_theta,y)  #doesn't work, returns nan
     # save the error rate
     errors[i] = calcError(y, y_h)
     if (i % 500) == 0:
         print "Iteration {0:3d}\tError: {1:.3f}".format(i,errors[i])
     #update parameters
-    theta -= alpha * (np.dot((h_theta - y).T, x) + reg_term / x.shape[0] * theta)
-
+    theta -= alpha * (np.dot((h_theta - y), x) + reg_term / x.shape[0] * theta)
 
 print "Best result with {0:.3f} error rate on training data for {1:3d} iterations".format(min(errors),iterations)
 
-
+#print cost
 # plotting the errors agains the iterations
 plt.plot(range(len(errors)),errors)
 plt.ylabel('Error Rates')
@@ -108,6 +112,5 @@ plt.show()
 
 
 #TODO write a submission to test with test.csv
-
 
 
