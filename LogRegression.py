@@ -32,8 +32,20 @@ so far the same as Johan neural network code,
 so we can compare only the machine learning algorithm
 """
 
+"""
+Now we have the features:
+  Pclass  SibSp   Fare  GenderNumber  EmbarkedNumber  AgeFill
+For Pclass  SibSp   Fare AgeFill - multiply them with eachother to create non-linear features
+"""
+
+for column1 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
+    for column2 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
+        input_data[column1 + " * " + column2] = input_data[column1] * input_data[column2]
+
+
+
+
 # TODO try cross-validation
-# input TODO add non-linear parameters
 x = np.array(input_data)
 x = np.insert(x, [0], 1, axis = 1) # insert x_0 = 1
 # classes
@@ -43,6 +55,9 @@ y = y.reshape(y.shape[0],) # make it (n,) array
 np.random.seed(1)  # seed random numbers 0 or 1
 theta = np.random.random(x.shape[1]) - 0.3
 #TODO Hard to generate good initial values - check why!!!
+
+
+
 
 # some functions to log regression TODO put in seperate file, check if something else will be nicer abstracted
 
@@ -61,12 +76,12 @@ alpha = 0.05
 # parameter for regularization TODO experiment after non-linearity is added
 reg_term = 0.05
 
-iterations = 10000
+iterations = 20000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
 
-for i in range(iterations): # while the error is more than 20%
+for i in range(iterations):
     # generate predictions
     h_theta = sigm(np.dot(x, theta)) # hypothesis - chance to be alive or dead
     # make a concrete prediction: alive if more than 50% chance.
@@ -93,3 +108,6 @@ plt.show()
 
 
 #TODO write a submission to test with test.csv
+
+
+
