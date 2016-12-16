@@ -20,14 +20,19 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 
 # init parameters TODO Experiment with parameters
 theta = np.ones(X_train.shape[1], dtype=float) / 5.0  # weights
-alphas = [0.1]    # learning rate
-reg_terms = [500]   # parameter for regularization
-iterations = 20000
+alphas = [0.0000005, 0.05]    # learning rate
+reg_terms = [0]   # parameter for regularization
+iterations = 100000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
 y_h = np.zeros(X_train.shape[0],dtype=float)
 
+
+"""
+With learning rate 0.0000005 it demonstrates proper learning. However it still doesn't achieve less than 0.19 error
+With learning rate 0.05 it goes up and down like crazy, but it stumbles upon the similar error rate as the above
+"""
 
 for alpha in alphas:
     for reg_term in reg_terms:
@@ -43,7 +48,7 @@ for alpha in alphas:
 
             # save the error rate
             errors[i] = f.calcError(y_train, y_h)
-            if (i+1 % 200000) == 0:
+            if (i % 1000) == 0:
                 print "Iteration {0:3d}\tError: {1:.3f}".format(i,errors[i])
             #update parameters
             theta -= alpha * (np.dot((h_theta - y_train), X_train) + reg_term / X_train.shape[0] * theta)
