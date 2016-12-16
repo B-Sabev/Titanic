@@ -18,27 +18,29 @@ y = y.reshape(y.shape[0],) # make it (n,) array
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
 
-# init parameters
-theta = np.ones(x.shape[1], dtype=float) / 5.0  #TODO Hard to generate good initial values - check why!!!
-alpha = 0.05    # learning rate - TODO TEST WITH MORE LEARNING RATES
-reg_term = 5000   # parameter for regularization TODO experiment
+# init parameters TODO Experiment with parameters
+theta = np.ones(X_train.shape[1], dtype=float) / 5.0  # weights
+alphas = [0.1]    # learning rate
+reg_terms = [500]   # parameter for regularization
 iterations = 20000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
+y_h = np.zeros(X_train.shape[0],dtype=float)
 
 
-# alpha > 0.01
-for alpha in [0.1]:
-    for reg_term in [100, 500]:
+for alpha in alphas:
+    for reg_term in reg_terms:
         #Learning
         for i in range(iterations):
             # generate prediction hypothesis
             h_theta = f.sigm(np.dot(X_train, theta)) # hypothesis - chance to be alive or dead
-            # make a concrete prediction: alive if more than 50% chance.
-            y_h = np.zeros(h_theta.shape,dtype=float)
+            # make a concrete prediction: alive if more than 50% chance, death otherwise
             y_h[h_theta >= 0.5] = 1
-            cost[i] = f.calc_cost(h_theta,y_train)  #doesn't work, returns nan
+            y_h[h_theta < 0.5] = 0
+
+            # cost[i] = f.calc_cost(h_theta,y_train)  #doesn't work, returns nan
+
             # save the error rate
             errors[i] = f.calcError(y_train, y_h)
             if (i+1 % 200000) == 0:
