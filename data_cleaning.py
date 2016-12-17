@@ -15,7 +15,7 @@ df_train = P.read_csv("data/train.csv", header=0)
 # make numbers from data
 # Male and Female to 1 and 0
 df_train['GenderNumber'] = 4
-df_train['GenderNumber'] = df_train.Sex.map({'female': 0, 'male': 1}).astype(int)
+df_train['GenderNumber'] = df_train.Sex.map({'female': 1, 'male': 0}).astype(float)
 # Location of embark to number
 df_train['EmbarkedNumber'] = df_train.Embarked.map({'S': 0, 'C': 1, 'Q': 2}).fillna(0.0).astype(int)
 # Fill out missing Ages by median of Pclass
@@ -28,9 +28,30 @@ for i in range(0, 2):
     for j in range(0, 3):
         df_train.loc[(df_train.Age.isnull()) & (df_train.GenderNumber == i) & (df_train.Pclass == j+1), 'AgeFill'] = median_ages[i, j]
 # drop values that are not relevant
-input_data = df_train.drop(['Name', 'Sex', 'Ticket', 'Cabin', 'Embarked', 'Parch', 'Age', 'PassengerId', 'Survived'], axis=1)
-output_data = df_train.drop(['Name', 'Sex', 'Ticket', 'Cabin', 'Embarked', 'Parch', 'Age', 'Pclass', 'SibSp', 'Fare',
-                             'GenderNumber', 'EmbarkedNumber', 'AgeFill', 'PassengerId'], axis=1)
+
+
+
+df_train['FamilySize'] = df_train['SibSp'] + df_train['Parch']
+df_train['Age*Class'] = df_train.AgeFill * df_train.Pclass / 10
+
+# 0.188 - 0.184,
+"""
+'Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber'   0.188 - 0.184
+added 'Age*Class'                                           0.206 - 0.168
+removed 'Pclass', 'AgeFill' leads to worsening
+female 1, male 0 leads to less error than the other way arround,
+further changing the values in disastrous
+'EmbarkedNumber' worsens the prediction
+fideling with Pclass doesn't change anything
+same for Fare and AgeFill
+"""
+input_data = df_train[['Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber', 'Age*Class']]
+output_data = df_train.Survived
+
+
+
+print input_data.head(10)
+print input_data.dtypes
 
 """
 so far the same as Johan neural network code,

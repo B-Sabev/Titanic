@@ -21,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 theta = np.ones(X_train.shape[1], dtype=float) / 5.0  # weights
 alphas = [0.005]    # learning rate
 reg_terms = [0]   # parameter for regularization
-iterations = 20000
+iterations = 10000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
