@@ -26,12 +26,9 @@ iterations = 20000
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
 y_h = np.zeros(X_train.shape[0],dtype=float)
+thetas = np.zeros(iterations * X_train.shape[1])
+thetas = thetas.reshape(iterations, X_train.shape[1])
 
-
-"""
-With learning rate 0.0000005 it demonstrates proper learning. However it still doesn't achieve less than 0.19 error
-With learning rate 0.05 it goes up and down like crazy, but it stumbles upon the similar error rate as the above
-"""
 
 for alpha in alphas:
     for reg_term in reg_terms:
@@ -47,22 +44,31 @@ for alpha in alphas:
 
             # save the error rate
             errors[i] = f.calcError(y_train, y_h)
-            if (i % 10000) == 0:
+            if (i % 1000) == 0:
                 print "Iteration {0:3d}\tError: {1:.3f}".format(i,errors[i])
+
+            #save thetas for latter usage
+            thetas[i,:] = theta
             #update parameters
             theta -= alpha * ((np.dot((h_theta - y_train), X_train) / X_train.shape[0]) + reg_term / X_train.shape[0] * theta)
         print "Alpha = {2:.3f}, reg_term = {3:3d} Best result with {0:.3f} error rate on training data for {1:3d} iterations".format(min(errors),iterations,alpha, reg_term)
 
+
+
+
+
+# Cross-verification with test data
+h_theta_test = f.sigm(np.dot(X_test, thetas[errors.argmin(), :]))
+y_h_test = np.zeros(h_theta_test.shape)
+y_h_test[h_theta_test >= 0.5] = 1
+print "Cross-verify with test data {0:.3f} error rate".format(f.calcError(y_test, y_h_test))
+
+
 #print cost
 # plotting the errors agains the iterations
-#plt.plot(range(len(errors)),errors)
-
-
 plt.plot(range(len(errors)),errors)
 plt.ylabel('Error Rates')
 plt.show()
-#TODO figure out why does it flactuate so much
 #TODO plot cost function
-
 
 #TODO write a submission to test with test.csv

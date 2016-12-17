@@ -43,6 +43,7 @@ Now we have the features:
 For Pclass  SibSp   Fare AgeFill - multiply them with eachother to create non-linear features
 """
 """
+
 for column1 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
     for column2 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
         input_data[column1 + " * " + column2] = input_data[column1] * input_data[column2]
