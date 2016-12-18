@@ -15,13 +15,13 @@ y = np.array(data.output_data, float)
 y = y.reshape(y.shape[0],) # make it (n,) array
 
 # Splits the training data further into train and test
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
 
 # init parameters TODO Experiment with parameters
 theta = np.ones(X_train.shape[1], dtype=float) / 5.0  # weights
 alphas = [0.005]    # learning rate
 reg_terms = [0]   # parameter for regularization
-iterations = 10000
+iterations = 5000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it

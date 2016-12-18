@@ -31,43 +31,70 @@ for i in range(0, 2):
 
 
 
+
+df_train['Title'] = 0.0
+
+
+import re
+
+txt='Mr.  Miss.   Master.   Mrs.'
+
+re_Mr = '(Mr\\.\\s+)'
+re_Mrs = '(Mrs\\.\\s+)'
+re_Master = '(Master\\.\\s+)'
+re_Miss = '(Miss\\.\\s+)'
+
+rg1 = re.compile(re_Mrs,re.IGNORECASE|re.DOTALL)
+rg2 = re.compile(re_Mr,re.IGNORECASE|re.DOTALL)
+rg3 = re.compile(re_Master,re.IGNORECASE|re.DOTALL)
+rg4 = re.compile(re_Miss,re.IGNORECASE|re.DOTALL)
+
+
+for index in range(len(df_train.Name)):
+    m1 = rg1.search(df_train.Name[index])
+    m2 = rg2.search(df_train.Name[index])
+    m3 = rg3.search(df_train.Name[index])
+    m4 = rg4.search(df_train.Name[index])
+    if m1: # Mrs
+        word = m1.group(1)
+        df_train.set_value(index, 'Title', 8)
+        #df_train['Title'][index] = 1
+    elif m2: # Mr
+        word = m2.group(1)
+        df_train.set_value(index, 'Title', 1)
+    elif m3: # Master
+        word = m3.group(1)
+        df_train.set_value(index, 'Title', 6)
+    elif m4: # Miss
+        word = m4.group(1)
+        df_train.set_value(index, 'Title', 7)
+    else:
+        df_train.set_value(index, 'Title', 4)
+
+
 df_train['FamilySize'] = df_train['SibSp'] + df_train['Parch']
 df_train['Age*Class'] = df_train.AgeFill * df_train.Pclass / 10
+df_train['Gender * FamilySize'] =  df_train['FamilySize'] * df_train['GenderNumber']
 
-# 0.188 - 0.184,
+
 """
-'Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber'   0.188 - 0.184
-added 'Age*Class'                                           0.206 - 0.168
+'Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber'   0.188 - 0.184   0.2 test_data
+added 'Age*Class'                                           0.206 - 0.168   0.2 test_data
 removed 'Pclass', 'AgeFill' leads to worsening
 female 1, male 0 leads to less error than the other way arround,
 further changing the values in disastrous
 'EmbarkedNumber' worsens the prediction
 fideling with Pclass doesn't change anything
 same for Fare and AgeFill
+
+Added Title - Mr: 0, Mrs: 1, Master: 2, Miss: 3, other: 1.5
+worsenes the score
+with some changes to the values, it keeps the score the same
+Changed the values to
+Mr: 1, Mrs: 8, Master: 6, Miss: 7, other: 3 -  overfits     0.167  - 0.190   0.2 test_data
+However if you reduce the training data it gets better      0.173  - 0.159   0.33 test_data
 """
-input_data = df_train[['Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber', 'Age*Class']]
+input_data = df_train[['Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber', 'Age*Class', 'Title']]
 output_data = df_train.Survived
 
-
-
-print input_data.head(10)
-print input_data.dtypes
-
-"""
-so far the same as Johan neural network code,
-so we can compare only the machine learning algorithm
-"""
-
-"""
-Now we have the features:
-  Pclass  SibSp   Fare  GenderNumber  EmbarkedNumber  AgeFill
-For Pclass  SibSp   Fare AgeFill - multiply them with eachother to create non-linear features
-"""
-"""
-
-for column1 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
-    for column2 in ["Pclass", "SibSp", "Fare", "AgeFill"]:
-        input_data[column1 + " * " + column2] = input_data[column1] * input_data[column2]
-
-"""
 
