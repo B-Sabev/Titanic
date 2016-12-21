@@ -11,7 +11,9 @@ import numpy as np
 
 # GET DATA
 # read file
-df_train = P.read_csv("data/train.csv", header=0)
+df_train = P.read_csv("data/test.csv", header=0)
+
+print df_train.dtypes
 # make numbers from data
 # Male and Female to 1 and 0
 df_train['GenderNumber'] = 4
@@ -102,7 +104,7 @@ Changed the values to
 Mr: 1, Mrs: 8, Master: 6, Miss: 7, other: 3 -  overfits     0.167  - 0.190   0.2 test_data
 However if you reduce the training data it gets better      0.173  - 0.159   0.33 test_data
 """
-input_data = df_train[['Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber', 'Age*Class', 'Title']]
-output_data = df_train.Survived
+test_data = df_train[['PassengerId','Pclass', 'AgeFill', 'FamilySize', 'Fare', 'GenderNumber', 'Age*Class', 'Title']]
+
 
 

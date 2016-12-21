@@ -1,0 +1,10 @@
+# Explore data in Jupiter notebook - record valuable features and new features that you can add
+# Cleaning - getting data ready for analysis - both test and train, mapping and feature selection
+# Plot data to see how to fill missing values
+# using models to predict missing data
+
+# Don't code your own model - just use ready code
+# check which values are more often confused - 0 marked as 1 or 1 marked as 0, gives insight on the data
+
+
+# If you achieve good score - pubish a kernel - practice to visualize and communicate results to others
