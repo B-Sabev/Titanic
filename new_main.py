@@ -3,6 +3,7 @@ import pandas as pd
 import re
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
 #get data
 train_data = pd.read_csv("data/train.csv", header=0)
@@ -181,13 +182,45 @@ Now that Age and Fare are binned, we are ready.
 !!!!!! TRY DIFFERENT BINNING
 """
 
+"""
+In the old cleaning - Face and AgeFill unbinned, Age*Class, no 'EmbarkedNumber', worked well
+"""
+
+print train_data.info()
+print test_data.info()
+
+# split the training data into training and test for cross-validation
+X_train, X_test, y_train, y_test = train_test_split(train_data.drop(['Survived'], axis=1), train_data['Survived'], test_size=0.20, random_state=42)
+
+# Import the random forest package
+from sklearn.ensemble import RandomForestClassifier
+
+# Create the random forest object which will include all the parameters
+# for the fit
+forest = RandomForestClassifier(n_estimators = 100)
+
+# Fit the training data to the Survived labels and create the decision trees
+forest = forest.fit(X_train,y_train)
+
+# Score the cross validation
+print forest.score(X_test, y_test)
+
+# Take the same decision trees and run it on the actual test data
+output = forest.predict(test_data.drop(['PassengerId'],axis=1))
+
+import csv
+#save the result to a file
+prediction_file = open("random_forest.csv", "wb")
+prediction_file_object = csv.writer(prediction_file)
+
+prediction_file_object.writerow(["PassengerId", "Survived"])
 
 
+for i in range(test_data.shape[0]):
+    prediction_file_object.writerow([test_data.at[i,'PassengerId'], output[i]])
 
 
-
-
-
+prediction_file.close()
 
 
 

@@ -6,6 +6,7 @@ import math
 import data_cleaning as data
 import functions as f
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 
 
 import new_main
@@ -24,11 +25,24 @@ y = y.reshape(y.shape[0],) # make it (n,) array
 # Splits the training data further into train and test
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=42)
 
+
+
+random_forest = RandomForestClassifier(n_estimators=100)
+
+random_forest.fit(X_train, y_train)
+
+Y_pred = random_forest.predict(X_test)
+
+print random_forest.score(X_train, y_train)
+
+
+
+"""
 # init parameters TODO Experiment with parameters
 theta = np.ones(X_train.shape[1], dtype=float) / 5.0  # weights
 alphas = [0.005]    # learning rate
 reg_terms = [0]   # parameter for regularization
-iterations = 5000
+iterations = 8000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
@@ -79,7 +93,7 @@ plt.show()
 #TODO plot cost function
 
 
-
+"""
 
 """
 
