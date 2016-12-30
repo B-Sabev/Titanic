@@ -4,7 +4,6 @@ Custom functions for the logistic regression
 import numpy as np
 import math
 
-
 def sigm(z):
     return 1.0 / (1.0 + math.e**(-z))
 
