@@ -7,7 +7,7 @@ from sklearn.cross_validation import train_test_split
 
 # Converts the input and output data from pandas dataframe to nparray
 input_data = np.array(data.input_data, float)
-input_data = np.insert(input_data, [0], 1, axis = 1) # insert x_0 = 1
+input_data = np.insert(input_data, [0], 1, axis = 1) # add bias
 # classes
 output_data = np.array(data.output_data, float)
 output_data = output_data.reshape(output_data.shape[0], ) # make it (n,) array
@@ -22,11 +22,10 @@ input_train, input_test, output_train, output_test = train_test_split(input_data
 weights = np.ones(input_train.shape[1], dtype=float) / 5.0  # weights
 learning_rates = [0.005]    # learning rate
 regularization_terms = [0]   # parameter for regularization
-iterations = 20000
+iterations = 100000
 # save all errors to output the best result
 errors = np.zeros(iterations,dtype=float)
 cost = np.zeros(iterations,dtype=float) #TODO calculate cost and plot it
-print(input_train.shape)
 prediction = np.zeros(input_train.shape[0], dtype=float)
 
 
@@ -49,9 +48,8 @@ for learning_rate in learning_rates:
             if (iteration % 10000) == 0:
                 print ("Iteration {0:3d}\tError: {1:.3f}".format(iteration, errors[iteration]))
 
-            a = np.dot((chance_survival - output_train), input_train) / input_train.shape[0]
-            b = regularization_term / input_train.shape[0]
-            weights -= learning_rate * (a + b * weights)
+            gradient = 1 / input_train.shape[0] * (np.dot((output_train - chance_survival), input_train))
+            weights += learning_rate * gradient
 
         print ("Alpha = {2:.3f}, reg_term = {3:3d} Best result with {0:.3f} error rate on training data for {1:3d} iterations".format(min(errors), iterations, learning_rate, regularization_term))
 
