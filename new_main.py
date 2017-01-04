@@ -186,14 +186,46 @@ Now that Age and Fare are binned, we are ready.
 In the old cleaning - Face and AgeFill unbinned, Age*Class, no 'EmbarkedNumber', worked well
 """
 
-print(train_data.info())
-print(test_data.info())
+#print(train_data.info())
+#print(test_data.info())
 
 # split the training data into training and test for cross-validation
 X_train, X_test, y_train, y_test = train_test_split(train_data.drop(['Survived'], axis=1), train_data['Survived'], test_size=0.20, random_state=42)
 
 # Import the random forest package
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, log_loss
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis
+from sklearn.linear_model import LogisticRegression
+
+classifiers = [
+    KNeighborsClassifier(3),
+    SVC(probability=True),
+    DecisionTreeClassifier(),
+    RandomForestClassifier(),
+    AdaBoostClassifier(),
+    GradientBoostingClassifier(),
+    GaussianNB(),
+    LinearDiscriminantAnalysis(),
+    QuadraticDiscriminantAnalysis(),
+    LogisticRegression()]
+
+
+for clf in classifiers:
+    name = clf.__class__.__name__
+    clf.fit(X_train, y_train)
+    train_predictions = clf.predict(X_test)
+    acc = accuracy_score(y_test, train_predictions)
+    print('{0:s} {1:.4f}'.format(name, acc))
+
+
+"""
+Training Random forest
+
 
 # Create the random forest object which will include all the parameters
 # for the fit
@@ -206,8 +238,16 @@ forest = forest.fit(X_train,y_train)
 print(forest.score(X_test, y_test))
 
 
+"""
+
+
+
+
+
+
 
 """
+HOW TO MAKE A SUBMISSION WITH RANDOM FOREST
 
 # Take the same decision trees and run it on the actual test data
 output = forest.predict(test_data.drop(['PassengerId'],axis=1))
