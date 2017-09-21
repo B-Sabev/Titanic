@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0502680d-c4e9-4366-b3db-2818ae022c29" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DebugFile.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Titanic_Kaggle.iml" afterPath="$PROJECT_DIR$/.idea/Titanic_Kaggle.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExploratoryAnalysis.ipynb" afterPath="$PROJECT_DIR$/ExploratoryAnalysis.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,10 +20,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="data_cleaning.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="data_cleaning.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_cleaning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
+            <state relative-caret-position="560">
               <caret line="28" column="121" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="28" selection-end-column="121" />
               <folding>
                 <element signature="e#182#200#0" expanded="true" />
@@ -45,10 +42,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="880">
+            <state relative-caret-position="1000">
               <caret line="50" column="56" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="50" selection-end-column="56" />
               <folding>
                 <element signature="e#19#37#0" expanded="true" />
@@ -334,7 +331,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22842261" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -664,22 +661,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/data_cleaning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="50" column="56" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="50" selection-end-column="56" />
+        <state relative-caret-position="560">
+          <caret line="28" column="121" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="28" selection-end-column="121" />
           <folding>
-            <element signature="e#19#37#0" expanded="true" />
+            <element signature="e#182#200#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_cleaning.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="28" column="121" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="28" selection-end-column="121" />
+        <state relative-caret-position="1000">
+          <caret line="50" column="56" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="50" selection-end-column="56" />
           <folding>
-            <element signature="e#182#200#0" expanded="true" />
+            <element signature="e#19#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
